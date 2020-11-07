@@ -1,9 +1,9 @@
 import React from "react";
 import ControlButtons from "../controlButtons/ControlButtons";
-
+import classes from './Productitem.module.css'
 
 const ProductItem = props => {
-    return  <div className="product">
+    return  <div className={classes.product}>
         <ControlButtons
             id = {props.id}
             pinnedItem = { props.pinnedItem}
@@ -11,16 +11,16 @@ const ProductItem = props => {
             deleteItem = {props.deleteItem}
             product = {props.product}
         />
-        <div className="imageWrapper">
+        <div className={classes.imageWrapper}>
             <img src={props.img} alt={props.name}/>
         </div>
-        <div className="productName">
+        <div className={classes.productName}>
             {props.name}
         </div>
-        <div className="productDescription">
+        <div className={classes.productDescription}>
             {props.description}
         </div>
-        <div className="productPrice">
+        <div className={classes.productPrice}>
             {props.price} $
         </div>
     </div>

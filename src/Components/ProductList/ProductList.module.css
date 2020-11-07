@@ -1,0 +1,35 @@
+
+.productList{
+    width: 80%;
+    margin: 0 auto;
+    padding: 5px 0px;
+    display: flex;
+    flex-flow:wrap row;
+    justify-content: flex-start;
+
+}
+.newProductBtnWrapper{
+    text-align:end;
+    width: 90%;
+    padding: 30px;
+}
+.newProductBtn{
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    background: none;
+    border: 3px solid #8c8c92;
+    outline: none;
+    font-size: 20px;
+}
+.newProductBtn:hover{
+    border-color:dodgerblue;
+}
+@media screen  and (max-width: 576px){
+    .productList{
+        width: 100%;
+        flex-flow: nowrap column;
+        align-items: center;
+    }
+
+}

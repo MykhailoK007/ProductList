@@ -18,12 +18,13 @@ class  ProductItemContainer extends React.Component {
         }
     }
     render() {
-        let {id, name, description, img, price} = this.props.product
+        let {id, name, description, img, price} = this.props.product;
+
         return <ProductItem
             id = {id}
             name = {name}
             description = {description}
-            img = {img || this.props.defaultImage }
+            img = {img  }
             price = {price}
             deleteItem = {this.props.deleteItem}
             key = {id}
@@ -40,8 +41,6 @@ const mapStateToProps = state => {
         productList:state.products,
         pinnedItem:state.pinnedItem,
         productsListLocal:state.productsListLocal,
-        defaultImage:state.defaultImage,
-
 
     }
 }

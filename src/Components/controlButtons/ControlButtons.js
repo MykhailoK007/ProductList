@@ -1,21 +1,27 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-
+import Button from "../Button/Button";
+import  classes from '../ProductItem/Productitem.module.css'
 const ControlButtons = props => {
-    return <NavLink to="/" className="buttonWrapper">
-        {   props.pinnedItem.id !== props.id &&
-        <input type="button"
-               className="pinedButton"
-               value="Pin"
-               onClick={() => {
-                   props.pinProduct(props.product);
-               }}
-        />}
-        {
-            props.pinnedItem && props.pinnedItem.id == props.id &&
-            <input type="button" className="pinedButton" value="UnPin" onClick={(e)=>{props.pinProduct()}}/>
+
+    return <NavLink to="/" className={classes.buttonWrapper}>
+        {!props.pinnedItem.id &&
+        <Button style={classes.pinBtn}
+                value="Pin"
+                handleClick = {()=>props.pinProduct(props.product)}
+        />
         }
-        <input type="button" className='removeButton' value="X" onClick={() => props.deleteItem(props.id)}/>
+
+        {
+            props.pinnedItem.id == props.id &&
+            <Button style={classes.pinBtn}
+                    value="UnPin"
+                    handleClick = {()=>props.pinProduct()}
+            />        }
+            <Button style={classes.removeBtn}
+                    value = "X"
+                    handleClick = {() => props.deleteItem(props.id)}
+            />
     </NavLink>
 }
 

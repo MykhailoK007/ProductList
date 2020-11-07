@@ -1,0 +1,63 @@
+.formWrapper{
+    width: 40%;
+    margin: 100px auto;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.inputWrapper{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+
+}
+.inputWrapper span, .inputImageWrapper span ,.inputImageWrapper span{
+    width: 30%;
+    text-align: start;
+}
+.inputImageWrapper {
+    width: 50%;
+    margin: 0 auto;
+    text-align: start;
+}
+
+.formSubmitWrapper{
+    width: 30%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around;
+    text-decoration:none;
+}
+.message{
+    color:red;
+    font-style: italic;
+    margin: 10px 0;
+}
+.fileInputStyle{
+    width: 70%;
+    margin-left: 2%;
+}
+.button{
+    width: 80px;
+    height: 25px;
+    margin-right: 20px;
+    background:dodgerblue;
+    border:none;
+    color:white;
+}
+@media screen and (max-width: 992px){
+    .formWrapper{
+        width: 60%;
+    }
+    .inputImageWrapper{
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .formWrapper{
+        width: 98%;
+        ;
+    }
+
+}

@@ -1,31 +1,53 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
-
+import classes from './CreateProduct.module.css'
+import InputWrapper from "../InputWrapper/InputwWrapper";
+import Button from "../Button/Button";
 
 const CreateProductItem = props => {
 
-    return <form className='formWrapper'>
+    return <form className={classes.formWrapper}>
         <h2>Add product</h2>
-        <div className="inputWrapper">
-            <span>Name</span>
-            <input type="text" name = "name" onChange={props.handleChange} value={props.name}/>
-        </div>
-        <div className="inputWrapper">
-            <span>Description</span>
-            <input type="text" name = "description"  onChange={props.handleChange} value = {props.description}/>
+        <div className={classes.message}>
+            {  props.emptyField &&
+            <div >Field with * must be filled</div>
+            }
+            {
+                props.errorMessage &&
+                    <div>{props.errorMessage}</div>
+            }
         </div>
 
-        <div className="inputWrapper">
-            <span>Price</span>
-            <input type="number" name = "price" onChange={props.handleChange} value={props.price}/>
-        </div>
-        {/*<div className="inputImageWrapper">*/}
-        {/*    <span>Image</span>*/}
-        {/*    <input type="file" name = 'img'  onChange={props.handleUploadFile} />*/}
-        {/*</div>*/}
-        <NavLink to = '/' className="formSubmitWrapper">
-            <button onClick={props.handleSubmit}>Accept</button>
-            <button>Cancel</button>
+        <InputWrapper buttonStyle={classes.inputWrapper}
+                      name = "Name"
+                      type="text"
+                      value={props.name}
+                      handleChange={props.handleChange}
+        />
+        <InputWrapper buttonStyle={classes.inputWrapper}
+                      name = "Description"
+                      type="text"
+                      value={props.description}
+                      handleChange={props.handleChange}
+        />
+        <InputWrapper buttonStyle={classes.inputWrapper}
+                      name = "Price"
+                      type="number"
+                      value={props.price}
+                      handleChange={props.handleChange}
+        />
+        <InputWrapper buttonStyle={classes.inputImageWrapper}
+                      fileInputStyle ={classes.fileInputStyle}
+                      name = "Image"
+                      type="file"
+                      handleChange={props.handleUploadFile}
+        />
+
+        <NavLink to = '/' className={classes.formSubmitWrapper}>
+            {!props.errorMessage  &&
+                <Button style={classes.button} handleClick = {props.handleSubmit} value ="Accept" />
+            }
+            <Button style={classes.button} value = "Cancel"/>
         </NavLink>
     </form>
 }

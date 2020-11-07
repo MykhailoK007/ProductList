@@ -2,7 +2,7 @@ const DELETE_ITEM = "DELETE_ITEM";
 const SET_PINNED_ITEM = "SET_PINNED_ITEM";
 const REMOVE_PINNED_ITEM = "REMOVE_PINNED_ITEM";
 const CHANGE_NEW_PRODUCT_DATA = "CHANGE_NEW_PRODUCT_DATA";
-// const CHANGE_NEW_PRODUCT_IMG = "CHANGE_NEW_PRODUCT_IMG";
+const CHANGE_NEW_PRODUCT_IMG = "CHANGE_NEW_PRODUCT_IMG";
 const ADD_NEW_PRODUCT = "ADD_NEW_PRODUCT";
 let initialState = {
     products:[
@@ -22,13 +22,6 @@ let initialState = {
         },
         {
             id:3,
-            name:'Pen',
-            description  : 'It`s the most expensive pen ',
-            img:"",
-            price:'400'
-        },
-        {
-            id:4,
             name:'Laptop',
             description: "It`s a mac",
             img:"https://i.citrus.ua/uploads/shop/9/d/9d7a447ca66cde15350bb8c87afad977.jpg",
@@ -37,8 +30,8 @@ let initialState = {
     ],
     defaultImage:'https://www.bluemountro.com/assets/images/no-image.png',
     pinnedItem:{},
-    newProduct:{},
-    productsListLocal:null
+    newProduct:{ name:'',description:'',price:''},
+    productsListLocal:null,
 }
 const ProductReducer = (state = initialState, action) => {
         switch(action.type){
@@ -51,16 +44,17 @@ const ProductReducer = (state = initialState, action) => {
                     productsListLocal: localList
                 }
             case  SET_PINNED_ITEM:
+
                     let result = state.products.filter(element => {
                         return element.id !== action.product.id
                     })
                 result.unshift(action.product);
 
-                return {
-                    ...state,
-                    productsListLocal: result,
-                    pinnedItem: action.product
-                }
+                    return {
+                        ...state,
+                        productsListLocal:result,
+                        pinnedItem: {...action.product}
+                    }
             case REMOVE_PINNED_ITEM:
                 return {
                     ...state,
@@ -74,24 +68,40 @@ const ProductReducer = (state = initialState, action) => {
                         ...state.newProduct, [action.data.key]:action.data.value
                     }
                 }
-            // case CHANGE_NEW_PRODUCT_IMG:
-            //     return {
-            //         ...state,
-            //         newProduct:{...state.newProduct, img:action.data}
-            //     }
-            case ADD_NEW_PRODUCT:
-
-                let productsListLocal = !!state.productsListLocal ?
-                    [...state.productsListLocal,state.newProduct] : null
-                return{
+            case CHANGE_NEW_PRODUCT_IMG:
+                return {
                     ...state,
-                    products:[...state.products, state.newProduct],
-                    productsListLocal:productsListLocal
+                    newProduct:{...state.newProduct, img:action.data}
                 }
+            case ADD_NEW_PRODUCT:
+                let {name, description, price,img } = state.newProduct
+                if(name && description && price) {
+                    let productsListLocal = !!state.productsListLocal ?
+                        [...state.productsListLocal,
+                            {...state.newProduct,
+                                id: state.products.length + 1,
+                                img:img || state.defaultImage
+                            }
+                        ] : null;
+
+                    return {
+                        ...state,
+                        products: [...state.products,
+                            {...state.newProduct,
+                                id: state.products.length + 1,
+                                img:img || state.defaultImage
+                            }
+                            ],
+                        productsListLocal: productsListLocal,
+                        newProduct: {name:'',description: '',price: ''}
+                    }
+                }
+                return state
             default:
                 return  state;
     }
 }
+
 
 export const deleteItem = (id) => {
     return {
@@ -111,17 +121,18 @@ export const removePinnedItem = () => {
     }
 }
 export const changeNewProductData = (data) => {
+
     return {
         type: CHANGE_NEW_PRODUCT_DATA,
         data
     }
 }
-// export const changeNewProductImg = (data) => {
-//     return {
-//         type: CHANGE_NEW_PRODUCT_IMG,
-//         data
-//     }
-// }
+export const changeNewProductImg = (data) => {
+    return {
+        type: CHANGE_NEW_PRODUCT_IMG,
+        data
+    }
+}
 export const addNewProduct = () => {
     return {
         type:ADD_NEW_PRODUCT,
