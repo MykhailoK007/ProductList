@@ -39,7 +39,7 @@ class CreateProductItemContainer extends React.Component {
     }
     handleSubmit = (e) => {
         const {name,description,price} = this.props.newProduct ;
-        if(name,description,price){
+        if(name && description && price){
             this.props.addNewProduct()
         }else{
             e.preventDefault()

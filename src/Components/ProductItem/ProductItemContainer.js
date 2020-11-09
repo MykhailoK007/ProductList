@@ -8,29 +8,44 @@ class  ProductItemContainer extends React.Component {
     constructor(props) {
         super(props);
         this.pinProduct = this.pinProduct.bind(this);
+        this.asd = this.asd.bind(this);
 
     }
     pinProduct =product => {
-        if(!Object.keys(this.props.pinnedItem).length){
-            this.props.setPinnedItem(product)
-        }else{
-            this.props.removePinnedItem()
-        }
+        let promise = new Promise((res) => {
+            if (!Object.keys(this.props.pinnedItem).length) {
+                res(this.props.setPinnedItem(product))
+            } else {
+                res(this.props.removePinnedItem())
+            }
+        })
+        promise.then(() => {
+            this.props.changeLocalProductList(product)
+        })
+
+    }
+    asd = (id) => {
+        let promise = new Promise(res => {
+            res(this.props.deleteItem(id))
+        })
+        promise.then(() => {
+            this.props.updateLocalProductList()
+        })
     }
     render() {
         let {id, name, description, img, price} = this.props.product;
-
         return <ProductItem
             id = {id}
             name = {name}
             description = {description}
             img = {img  }
             price = {price}
-            deleteItem = {this.props.deleteItem}
+            deleteItem = {this.asd}
             key = {id}
-            pinProduct = {this.pinProduct.bind(this)}
+            pinProduct = {this.pinProduct}
             pinnedItem = {this.props.pinnedItem}
             product = {this.props.product}
+
         />
     }
 

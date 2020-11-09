@@ -23,6 +23,10 @@ const ProductList = (props) =>{
                     key = {item.id}
                     product = {item}
                     pinProduct = {props.pinProduct}
+                    productsListLocal = {props.productsListLocal}
+                    changeLocalProductList = {props.changeLocalProductList}
+                    updateLocalProductList = {props.updateLocalProductList}
+
                 />
             })}
         </div>

@@ -4,6 +4,7 @@ const REMOVE_PINNED_ITEM = "REMOVE_PINNED_ITEM";
 const CHANGE_NEW_PRODUCT_DATA = "CHANGE_NEW_PRODUCT_DATA";
 const CHANGE_NEW_PRODUCT_IMG = "CHANGE_NEW_PRODUCT_IMG";
 const ADD_NEW_PRODUCT = "ADD_NEW_PRODUCT";
+
 let initialState = {
     products:[
         {
@@ -37,25 +38,20 @@ const ProductReducer = (state = initialState, action) => {
         switch(action.type){
             case DELETE_ITEM:
                 let localList = state.productsListLocal ? [...state.productsListLocal.filter((item) => item.id !== action.id)]:null
-
                 return {
                     ...state,
                     products: [...state.products.filter((item) => item.id !== action.id)],
-                    productsListLocal: localList
                 }
             case  SET_PINNED_ITEM:
-
-                    let result = state.products.filter(element => {
-                        return element.id !== action.product.id
-                    })
-                result.unshift(action.product);
-
                     return {
                         ...state,
-                        productsListLocal:result,
+                        productsListLocal:[...state.products.filter(element => {
+                            return element.id !== action.product.id;
+                            })],
                         pinnedItem: {...action.product}
                     }
             case REMOVE_PINNED_ITEM:
+
                 return {
                     ...state,
                     pinnedItem: {},
@@ -74,13 +70,11 @@ const ProductReducer = (state = initialState, action) => {
                     newProduct:{...state.newProduct, img:action.data}
                 }
             case ADD_NEW_PRODUCT:
-                let {name, description, price,img } = state.newProduct
-                if(name && description && price) {
                     let productsListLocal = !!state.productsListLocal ?
                         [...state.productsListLocal,
                             {...state.newProduct,
                                 id: state.products.length + 1,
-                                img:img || state.defaultImage
+                                img:state.newProduct.img || state.defaultImage
                             }
                         ] : null;
 
@@ -89,13 +83,14 @@ const ProductReducer = (state = initialState, action) => {
                         products: [...state.products,
                             {...state.newProduct,
                                 id: state.products.length + 1,
-                                img:img || state.defaultImage
+                                img:state.newProduct.img || state.defaultImage
                             }
                             ],
-                        productsListLocal: productsListLocal,
-                        newProduct: {name:'',description: '',price: ''}
+                        productsListLocal:[...state.productsListLocal, {...state.newProduct,id: state.products.length + 1,
+                            img:state.newProduct.img || state.defaultImage }],
+                        newProduct: {name:'',description: '',price: ''},
                     }
-                }
+
                 return state
             default:
                 return  state;

@@ -10,6 +10,7 @@ const ProductItem = props => {
             pinProduct = {props.pinProduct}
             deleteItem = {props.deleteItem}
             product = {props.product}
+
         />
         <div className={classes.imageWrapper}>
             <img src={props.img} alt={props.name}/>
